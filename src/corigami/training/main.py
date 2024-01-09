@@ -180,17 +180,70 @@ class TrainModule(pl.LightningModule):
 
     def get_dataset(self, args, mode):
 
-        celltype_root = f'{args.dataset_data_root}/{args.dataset_assembly}/{args.dataset_celltype}'
+        assembly_root = f'{args.dataset_data_root}/{args.dataset_assembly}'
+        imr90_root = f'{args.dataset_data_root}/{"imr90"}'
+        k562_root = f'{args.dataset_data_root}/{"k562"}'
+        gm12878_root = f'{args.dataset_data_root}/{"gm12878"}'
+        mcf7_root = f'{args.dataset_data_root}/{"mcf7"}'
+        hepg2_root = f'{args.dataset_data_root}/{"hepg2"}'
+        hct116_root = f'{args.dataset_data_root}/{"hct116"}'
+        panc1_root = f'{args.dataset_data_root}/{"panc1"}'
+
         genomic_features = {'ctcf_log2fc' : {'file_name' : 'ctcf_log2fc.bw',
                                              'norm' : None },
                             'atac' : {'file_name' : 'atac.bw',
                                              'norm' : 'log' }}
-        dataset = genome_dataset.GenomeDataset(celltype_root, 
+        dataset_imr90 = genome_dataset.GenomeDataset(imr90_root, 
                                 args.dataset_assembly,
                                 genomic_features, 
                                 mode = mode,
                                 include_sequence = True,
                                 include_genomic_features = True)
+
+        dataset_k562 = genome_dataset.GenomeDataset(k562_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+        
+        dataset_gm12878 = genome_dataset.GenomeDataset(gm12878_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+        
+        dataset_mcf7 = genome_dataset.GenomeDataset(mcf7_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+
+        dataset_hepg2 = genome_dataset.GenomeDataset(hepg2_root,
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+        
+        dataset_hct116 = genome_dataset.GenomeDataset(hct116_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+
+        dataset_panc1 = genome_dataset.GenomeDataset(panc1_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+
+        dataset = torch.utils.data.ConcatDataset([dataset_imr90, dataset_k562, dataset_gm12878, dataset_mcf7, dataset_hepg2, dataset_hct116, dataset_panc1])
+
 
         # Record length for printing validation image
         if mode == 'val':
