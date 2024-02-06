@@ -180,7 +180,7 @@ class TrainModule(pl.LightningModule):
 
         assembly_root = f'{args.dataset_data_root}/{args.dataset_assembly}'
         imr90_root = f'{assembly_root}/{"imr90_intact"}'
-        k562_root = f'{assembly_root}/{"k562_intact"}'
+        #k562_root = f'{assembly_root}/{"k562_intact"}'
         gm12878_root = f'{assembly_root}/{"gm12878_intact"}'
         mcf7_root = f'{assembly_root}/{"mcf7_intact"}'
         hepg2_root = f'{assembly_root}/{"hepg2_intact"}'
@@ -192,13 +192,6 @@ class TrainModule(pl.LightningModule):
                             'atac' : {'file_name' : 'atac.bw',
                                              'norm' : 'log' }}
         dataset_imr90 = genome_dataset.GenomeDataset(imr90_root, 
-                                args.dataset_assembly,
-                                genomic_features, 
-                                mode = mode,
-                                include_sequence = True,
-                                include_genomic_features = True)
-
-        dataset_k562 = genome_dataset.GenomeDataset(k562_root, 
                                 args.dataset_assembly,
                                 genomic_features, 
                                 mode = mode,
@@ -240,7 +233,7 @@ class TrainModule(pl.LightningModule):
                                 include_sequence = True,
                                 include_genomic_features = True)
 
-        dataset = torch.utils.data.ConcatDataset([dataset_imr90, dataset_k562, dataset_gm12878, dataset_mcf7, dataset_hepg2, dataset_hct116, dataset_panc1])
+        dataset = torch.utils.data.ConcatDataset([dataset_imr90, dataset_gm12878, dataset_mcf7, dataset_hepg2, dataset_hct116, dataset_panc1])
 
         # Record length for printing validation image
         if mode == 'val':
