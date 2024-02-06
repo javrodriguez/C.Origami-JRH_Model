@@ -27,8 +27,6 @@ def init_parser():
                         help='Root path of training data', required=True)
   parser.add_argument('--assembly', dest='dataset_assembly', default='hg38',
                         help='Genome assembly for training data')
-  parser.add_argument('--celltype', dest='dataset_celltype', default='imr90',
-                        help='Sample cell type for prediction, used for output separation')
 
   # Model parameters
   parser.add_argument('--model-type', dest='model_type', default='ConvTransModel',
@@ -181,13 +179,13 @@ class TrainModule(pl.LightningModule):
     def get_dataset(self, args, mode):
 
         assembly_root = f'{args.dataset_data_root}/{args.dataset_assembly}'
-        imr90_root = f'{assembly_root}/{"imr90"}'
-        k562_root = f'{assembly_root}/{"k562"}'
-        gm12878_root = f'{assembly_root}/{"gm12878"}'
-        mcf7_root = f'{assembly_root}/{"mcf7"}'
-        hepg2_root = f'{assembly_root}/{"hepg2"}'
-        hct116_root = f'{assembly_root}/{"hct116"}'
-        panc1_root = f'{assembly_root}/{"panc1"}'
+        imr90_root = f'{assembly_root}/{"imr90_intact"}'
+        k562_root = f'{assembly_root}/{"k562_intact"}'
+        gm12878_root = f'{assembly_root}/{"gm12878_intact"}'
+        mcf7_root = f'{assembly_root}/{"mcf7_intact"}'
+        hepg2_root = f'{assembly_root}/{"hepg2_intact"}'
+        hct116_root = f'{assembly_root}/{"hct116_intact"}'
+        panc1_root = f'{assembly_root}/{"panc1_intact"}'
 
         genomic_features = {'ctcf_log2fc' : {'file_name' : 'ctcf_log2fc.bw',
                                              'norm' : None },
@@ -207,7 +205,7 @@ class TrainModule(pl.LightningModule):
                                 include_sequence = True,
                                 include_genomic_features = True)
 
-        dataset = torch.utils.data.ConcatDataset([dataset_imr90, dataset_k562])
+        dataset = torch.utils.data.ConcatDataset([dataset_imr90, dataset_k562, dataset_gm12878, dataset_mcf7, dataset_hepg2, dataset_hct116, dataset_panc1])
 
         # Record length for printing validation image
         if mode == 'val':
