@@ -204,6 +204,41 @@ class TrainModule(pl.LightningModule):
                                 mode = mode,
                                 include_sequence = True,
                                 include_genomic_features = True)
+        
+        dataset_gm12878 = genome_dataset.GenomeDataset(gm12878_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+        
+        dataset_mcf7 = genome_dataset.GenomeDataset(mcf7_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+
+        dataset_hepg2 = genome_dataset.GenomeDataset(hepg2_root,
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+        
+        dataset_hct116 = genome_dataset.GenomeDataset(hct116_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
+
+        dataset_panc1 = genome_dataset.GenomeDataset(panc1_root, 
+                                args.dataset_assembly,
+                                genomic_features, 
+                                mode = mode,
+                                include_sequence = True,
+                                include_genomic_features = True)
 
         dataset = torch.utils.data.ConcatDataset([dataset_imr90, dataset_k562, dataset_gm12878, dataset_mcf7, dataset_hepg2, dataset_hct116, dataset_panc1])
 
