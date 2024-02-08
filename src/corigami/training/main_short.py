@@ -190,7 +190,7 @@ class TrainModule(pl.LightningModule):
         genomic_features = {'ctcf_log2fc' : {'file_name' : 'ctcf_log2fc.bw',
                                              'norm' : None },
                             'atac' : {'file_name' : 'atac.bw',
-                                             'norm' : 'log' }}
+                                             'norm' : None }}
         dataset_imr90 = genome_dataset.GenomeDataset(imr90_root, 
                                 args.dataset_assembly,
                                 genomic_features, 
